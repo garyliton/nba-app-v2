@@ -1,13 +1,9 @@
-from flask import Flask
 from nba_api.stats.endpoints import ScoreboardV2
 from datetime import date
 
-app = Flask(__name__)
 
-
-@app.route('/')
-def index():
-    scoreboard = ScoreboardV2(game_date=date(2018, 12, 25))
+def get_games():
+    scoreboard = ScoreboardV2(game_date=date.today())
     linescores = scoreboard.line_score
     gameday_data = []
     current_game = {}
@@ -37,8 +33,4 @@ def index():
             current_game = {}
         count += 1
 
-    return str(gameday_data)
-
-
-if __name__ == "__main__":
-    app.run()
+    return gameday_data

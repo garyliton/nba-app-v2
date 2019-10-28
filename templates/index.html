@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <p>Date: <input type="text" id="datepicker"></p>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(function(){
+    var today = new Date();
+    $("#datepicker").datepicker().datepicker("setDate", new Date());
+});
+</script>
+{% endblock %}
