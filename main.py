@@ -7,8 +7,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    x = get_games()
-    return render_template('index.html')
+    games_data = get_games()
+    return render_template('index.html', data=games_data)
 
 
 
