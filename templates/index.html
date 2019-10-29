@@ -2,7 +2,7 @@
 {% block content %}
 <div id="date-content" class="container m-2">
     <div class="row m-2">
-        <input class="btn btn-primary" type="button" id="datepicker" value="select date">
+        <input class="btn btn-info" type="button" id="datepicker" value="select date">
     </div>
     <div class="row">
         <span id="dateSelected"></span>
@@ -15,7 +15,7 @@
 
 {% block scripts %}
 <script>
-$( document ).ready(function() {
+$(document).ready(function() {
     var gamesData = {{ data | tojson }}
     addGames(gamesData);
 });
@@ -40,13 +40,21 @@ function updateDate(selectedDate) {
     var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     var date = new Date(selectedDate);
     var dateString = '' + days[date.getDay()] + ', ' + months[date.getMonth()] + ' ' + date.getDate() +  ' ' + date.getFullYear();
+    var dateString2 = '' + (date.getMonth() + 1) + ' ' + date.getDate() +  ' ' + date.getFullYear();
     $("#dateSelected").html(dateString);
+
+    $.ajax({
+        url: "/process_date_change",
+        data: {date : dateString2},
+        success: function(res){
+            addGames(res["games_data"]);
+        }
+    });
 }
 
 function addGames(data) {
     console.log(data);
-<!--    $("#page-content").append("<div class=\"row border p-1\">" + data[0]["away"]["TEAM_ABBREVIATION"] + "</div>");-->
-
+    $("#games-content").empty();
     var i;
     for (i = 0; i < data.length; i ++) {
         var awayTeamAbv = data[i]["away"]["TEAM_ABBREVIATION"];
@@ -69,7 +77,7 @@ function addGames(data) {
         } else {
             homePts = data[i]["home"]["PTS"];
         }
-        var tableStr = "<div class=\"row\"><div class=\"col-md-auto\"><img height=\"40\" src=\"" + homeImg + "\" alt=\"homeImg\"></div><div class=\"col-md-auto\"><div class=\"row border p-1\">" + homeTeamAbv + "</div><div class=\"row border p-1\">" + homeTeamRecord + "</div></div><div class=\"col-md-auto border\">" + homePts +  "</div></div><div class=\"row mb-4\"><div class=\"col-md-auto\"><img height=\"40\" src=\"" + awayImg + "\" alt=\"awayImg\"></div><div class=\"col-md-auto\"><div class=\"row border p-1\">" + awayTeamAbv + "</div><div class=\"row border p-1\">" + awayTeamRecord + "</div></div><div class=\"col-md-auto border\">" + awayPts + "</div></div><hr/>"
+        var tableStr = "<div class=\"row\"><div class=\"col-md-auto p-2\"><img height=\"40\" src=\"" + homeImg + "\" alt=\"homeImg\"></div><div class=\"col-md-auto\"><div class=\"row border p-1\">" + homeTeamAbv + "</div><div class=\"row border p-1\">" + homeTeamRecord + "</div></div><div class=\"col-md-auto p-3\">" + homePts +  "</div></div><div class=\"row mb-4\"><div class=\"col-md-auto p-2\"><img height=\"40\" src=\"" + awayImg + "\" alt=\"awayImg\"></div><div class=\"col-md-auto\"><div class=\"row border p-1\">" + awayTeamAbv + "</div><div class=\"row border p-1\">" + awayTeamRecord + "</div></div><div class=\"col-md-auto p-3\">" + awayPts + "</div></div><hr/>"
         $("#games-content").append(tableStr);
 
 
