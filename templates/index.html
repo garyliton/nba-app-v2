@@ -2,7 +2,12 @@
 {% block content %}
 <div id="date-content" class="container m-2">
     <div class="row m-2">
-        <input class="btn btn-info" type="button" id="datepicker" value="select date">
+        <div class="col">
+            <input class="btn btn-info" type="button" id="datepicker" value="select date">
+        </div>
+        <div class="col">
+            <button class="btn btn-primary" id="email-btn">email</button>
+        </div>
     </div>
     <div class="row">
         <span id="dateSelected"></span>
@@ -18,7 +23,12 @@
 $(document).ready(function() {
     var gamesData = {{ data | tojson }}
     addGames(gamesData);
+    $("#home-bar").css("font-weight","Bold");
+
+
 });
+
+
 
 $(function() {
     $("#datepicker").datepicker({
@@ -79,11 +89,15 @@ function addGames(data) {
         }
         var tableStr = "<div class=\"row\"><div class=\"col-md-auto p-2\"><img height=\"40\" src=\"" + homeImg + "\" alt=\"homeImg\"></div><div class=\"col-md-auto\"><div class=\"row border p-1\">" + homeTeamAbv + "</div><div class=\"row border p-1\">" + homeTeamRecord + "</div></div><div class=\"col-md-auto p-3\">" + homePts +  "</div></div><div class=\"row mb-4\"><div class=\"col-md-auto p-2\"><img height=\"40\" src=\"" + awayImg + "\" alt=\"awayImg\"></div><div class=\"col-md-auto\"><div class=\"row border p-1\">" + awayTeamAbv + "</div><div class=\"row border p-1\">" + awayTeamRecord + "</div></div><div class=\"col-md-auto p-3\">" + awayPts + "</div></div><hr/>"
         $("#games-content").append(tableStr);
-
-
-
-
     }
 }
+
+
+$("#email-btn").click(function() {
+    sendMail("yooo");
+});
+
+
+
 </script>
 {% endblock %}

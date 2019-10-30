@@ -28,13 +28,8 @@
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
 <!--        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>-->
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
-
         <script type="text/javascript" src="https://cdn.emailjs.com/sdk/2.3.2/email.min.js"></script>
-        <script type="text/javascript">
-           (function(){
-              emailjs.init("user_Hzd5JUsmtAfzPF0OFPYyt");
-           })();
-        </script>
+        <script type="text/javascript" src="../static/js/email.js"></script>
 
     </head>
     <body>
@@ -102,14 +97,14 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="nav navbar-nav ml-auto">
                                 <li class="nav-item active">
-                                    <a class="nav-link" href="/">Home</a>
+                                    <a class="nav-link text-info" id="home-bar" href="/">Home</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Standings</a>
+                                    <a class="nav-link text-info" href="#">Standings</a>
                                 </li>
                                 <li class="nav-item">
                                     <div id="league-leaders">
-                                        <a class="nav-link" href="/league_leaders">League Leaders</a>
+                                        <a class="nav-link text-info" id="leaders-bar" href="/league_leaders">League Leaders</a>
                                     </div>
                                 </li>
                             </ul>
