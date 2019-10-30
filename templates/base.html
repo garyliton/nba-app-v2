@@ -28,13 +28,8 @@
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
 <!--        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>-->
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
-
         <script type="text/javascript" src="https://cdn.emailjs.com/sdk/2.3.2/email.min.js"></script>
-        <script type="text/javascript">
-           (function(){
-              emailjs.init("user_Hzd5JUsmtAfzPF0OFPYyt");
-           })();
-        </script>
+        <script type="text/javascript" src="../static/js/email.js"></script>
 
     </head>
     <body>
@@ -45,47 +40,30 @@
                     <h3>nba-app-v2</h3>
                     <img src="../static/images/nba.png" height="60">
                 </div>
-                <ul class="list-unstyled components">
-                    <li class="active">
-                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
-                        <ul class="collapse list-unstyled" id="homeSubmenu">
-                            <li>
-                                <a href="#">Home 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Home 2</a>
-                            </li>
-                            <li>
-                                <a href="#">Home 3</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">About</a>
-                    </li>
-                    <li>
-                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
-                        <ul class="collapse list-unstyled" id="pageSubmenu">
-                            <li>
-                                <a href="#">Page 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Page 2</a>
-                            </li>
-                            <li>
-                                <a href="#">Page 3</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                <ul class="list-unstyled CTAs">
-                    <li>
-                        <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a>
-                    </li>
-                    <li>
-                        <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
-                    </li>
-                </ul>
+
+
+                <form style="padding:20px" id="emailform">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                    <br>
+                    <label for="point-differential">Point Differential</label>
+                    <input type="number" class="form-control" id="point-differential">
+                    <br>
+                    <label for="quarter">Quarter</label>
+                    <select id="quarter" name="quarter">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">OT</option>
+                    </select>
+                    <br>
+                  <button id="save-btn" type="button" class="btn btn-primary">Save</button>
+                </form>
+                <div id="email" style="padding-left:20px">
+                    saved!
+                </div>
+
             </nav>
 
             <!-- top nav bar  -->
@@ -102,14 +80,14 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="nav navbar-nav ml-auto">
                                 <li class="nav-item active">
-                                    <a class="nav-link" href="/">Home</a>
+                                    <a class="nav-link text-info" id="home-bar" href="/">Home</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Standings</a>
+                                    <a class="nav-link text-info" href="#">Standings</a>
                                 </li>
                                 <li class="nav-item">
                                     <div id="league-leaders">
-                                        <a class="nav-link" href="/league_leaders">League Leaders</a>
+                                        <a class="nav-link text-info" id="leaders-bar" href="/league_leaders">League Leaders</a>
                                     </div>
                                 </li>
                             </ul>
@@ -129,16 +107,13 @@
                 $('#sidebarCollapse').on('click', function () {
                     $('#sidebar').toggleClass('active');
                 });
+                $("#email").hide();
             });
 
-<!--            $('#league-leaders').on( "click", function() {-->
-<!--                $.ajax({-->
-<!--                    url: "/process_league_leaders",-->
-<!--                    success: function(){-->
-<!--                        console.log("yo");-->
-<!--                    }-->
-<!--                });-->
-<!--            });-->
+            $("#save-btn").click(function() {
+                $("#email").show().delay(3000).fadeOut();
+
+            });
         </script>
         {% block scripts %}
 
