@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block content %}
+<div id="date-content" class="container m-2">
+    <div class="row m-2">
+        <input class="btn btn-primary" type="button" id="datepicker" value="select date">
+    </div>
+    <div class="row">
+        <span id="dateSelected"></span>
+    </div>
+</div>
+<hr/>
+<div id="games-content" class="container m-2">
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$( document ).ready(function() {
+    var gamesData = {{ data | tojson }}
+    addGames(gamesData);
+});
+
+$(function() {
+    $("#datepicker").datepicker({
+        defaultDate: +0,
+        onSelect: function(selected, event) {
+            updateDate(selected);
+        }
+    });
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    var date = new Date($("#datepicker").datepicker('getDate'));
+    var dateString = '' + days[date.getDay()] + ', ' + months[date.getMonth()] + ' ' + date.getDate() +  ' ' + date.getFullYear();
+    $("#dateSelected").html(dateString);
+
+});
+
+function updateDate(selectedDate) {
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    var date = new Date(selectedDate);
+    var dateString = '' + days[date.getDay()] + ', ' + months[date.getMonth()] + ' ' + date.getDate() +  ' ' + date.getFullYear();
+    $("#dateSelected").html(dateString);
+}
+
+function addGames(data) {
+    console.log(data);
+<!--    $("#page-content").append("<div class=\"row border p-1\">" + data[0]["away"]["TEAM_ABBREVIATION"] + "</div>");-->
+
+    var i;
+    for (i = 0; i < data.length; i ++) {
+        var awayTeamAbv = data[i]["away"]["TEAM_ABBREVIATION"];
+        var awayTeamRecord = data[i]["away"]["TEAM_WINS_LOSSES"];
+        var awayPts;
+        var awayImg = data[i]["away"]["IMG"];
+        var homeTeamAbv = data[i]["home"]["TEAM_ABBREVIATION"];
+        var homeTeamRecord = data[i]["home"]["TEAM_WINS_LOSSES"];
+        var homePts;
+        var homeImg = data[i]["home"]["IMG"];
+
+        if (!data[i]["away"]["PTS"]){
+            awayPts = 0;
+        } else {
+            awayPts = data[i]["away"]["PTS"];
+        }
+
+        if (!data[i]["home"]["PTS"]){
+            homePts = 0;
+        } else {
+            homePts = data[i]["home"]["PTS"];
+        }
+        var tableStr = "<div class=\"row\"><div class=\"col-md-auto\"><img height=\"40\" src=\"" + homeImg + "\" alt=\"homeImg\"></div><div class=\"col-md-auto\"><div class=\"row border p-1\">" + homeTeamAbv + "</div><div class=\"row border p-1\">" + homeTeamRecord + "</div></div><div class=\"col-md-auto border\">" + homePts +  "</div></div><div class=\"row mb-4\"><div class=\"col-md-auto\"><img height=\"40\" src=\"" + awayImg + "\" alt=\"awayImg\"></div><div class=\"col-md-auto\"><div class=\"row border p-1\">" + awayTeamAbv + "</div><div class=\"row border p-1\">" + awayTeamRecord + "</div></div><div class=\"col-md-auto border\">" + awayPts + "</div></div><hr/>"
+        $("#games-content").append(tableStr);
+
+
+
+
+    }
+}
+</script>
+{% endblock %}

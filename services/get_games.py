@@ -1,13 +1,9 @@
-from flask import Flask
 from nba_api.stats.endpoints import ScoreboardV2
 from datetime import date
+from services.team_img import constants
 
-app = Flask(__name__)
-
-
-@app.route('/')
-def index():
-    scoreboard = ScoreboardV2(game_date=date(2018, 12, 25))
+def get_games():
+    scoreboard = ScoreboardV2(game_date=date.today())
     linescores = scoreboard.line_score
     gameday_data = []
     current_game = {}
@@ -21,8 +17,10 @@ def index():
                 'TEAM_CITY_NAME': linescore[5],
                 'TEAM_NAME': linescore[6],
                 'TEAM_WINS_LOSSES': linescore[7],
-                'PTS': linescore[22]
+                'PTS': linescore[22],
+                'IMG': constants[linescore[4]]['img']
             }
+
         else:
             current_game['home'] = {
                 'GAME_ID': linescore[2],
@@ -31,14 +29,11 @@ def index():
                 'TEAM_CITY_NAME': linescore[5],
                 'TEAM_NAME': linescore[6],
                 'TEAM_WINS_LOSSES': linescore[7],
-                'PTS': linescore[22]
+                'PTS': linescore[22],
+                'IMG': constants[linescore[4]]['img']
             }
             gameday_data.append(current_game)
             current_game = {}
         count += 1
 
-    return str(gameday_data)
-
-
-if __name__ == "__main__":
-    app.run()
+    return gameday_data
