@@ -4,9 +4,9 @@ $(document).ready(function() {
     })();
 });
 
-window.setInterval(function(){
-  getUpdates();
-}, 5000);
+//window.setInterval(function(){
+//  getUpdates();
+//}, 5000);
 
 
 function sendMail(msg) {
