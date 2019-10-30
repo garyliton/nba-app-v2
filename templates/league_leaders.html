@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div id="date-content" class="container">
+    <table id="example" class="display" width="100%"></table>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(document).ready(function() {
+    var leadersData = {{ data | tojson }}
+    console.log(leadersData);
+    drawTable(leadersData);
+});
+
+
+function drawTable(leadersData) {
+    $('#example').DataTable( {
+        data: leadersData["data"],
+        columns: [
+        {title: "RANK"},
+        {title: "PLAYER"},
+        {title: "TEAM"},
+<!--        {title: "GP"},-->
+<!--        {title: "MIN"},-->
+<!--        {title: "FGM"},-->
+<!--        {title: "FGA"},-->
+        {title: "FG_PCT"},
+<!--        {title: "FG3M"},-->
+<!--        {title: "FG3A"},-->
+        {title: "FG3_PCT"},
+<!--        {title: "FTM"},-->
+<!--        {title: "FTA"},-->
+        {title: "FT_PCT"},
+<!--        {title: "OREB"},-->
+<!--        {title: "DREB"},-->
+        {title: "REB"},
+        {title: "AST"},
+        {title: "STL"},
+        {title: "BLK"},
+        {title: "TOV"},
+<!--        {title: "PF"},-->
+        {title: "PTS"},
+        {title: "EFF"}]
+<!--        {title: "AST_TOV"},-->
+<!--        {title: "STL_TOV"}]-->
+
+    });
+}
+
+
+
+</script>
+{% endblock %}

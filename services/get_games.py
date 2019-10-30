@@ -2,8 +2,8 @@ from nba_api.stats.endpoints import ScoreboardV2
 from datetime import date
 from services.team_img import constants
 
-def get_games():
-    scoreboard = ScoreboardV2(game_date=date.today())
+def get_games(date_game=date.today()):
+    scoreboard = ScoreboardV2(game_date=date_game)
     linescores = scoreboard.line_score
     gameday_data = []
     current_game = {}
